@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AWAH-Therapy-Card-Game:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AWAH_Therapy_Card_Game_jar</output-path>
+    <root id="archive" name="AWAH-Therapy-Card-Game.jar">
+      <element id="module-output" name="App" />
+    </root>
+  </artifact>
+</component>
