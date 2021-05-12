@@ -15,7 +15,10 @@ public class Card implements Constants {
     private static String[] suits = new String[] { "C", "S", "D", "H" };
 
     private static JLabel card;
+    private static boolean faceUp;
+
     public static JLabel getCard() { return card; }
+    public static boolean isFaceUp() { return faceUp; }
 
     /**
      * Create a Card object that is displayable to the screen.
@@ -25,8 +28,14 @@ public class Card implements Constants {
     public Card(String cardName, boolean isFaceUp) {
         // set corresponding filePath
         String FILE_PATH;
-        if (isFaceUp) { FILE_PATH = "Img/Cards/" + cardName + ".png"; }
-        else { FILE_PATH = "Img/Backs/" + cardName + ".png"; }
+        if (isFaceUp) {
+            FILE_PATH = "Img/Cards/" + cardName + ".png";
+            faceUp = true;
+        }
+        else {
+            faceUp = false;
+            FILE_PATH = "Img/Backs/" + cardName + ".png";
+        }
 
         // set up card as JLabel
         card = new JLabel();
@@ -38,30 +47,26 @@ public class Card implements Constants {
         // mouse listeners
         card.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                Window.displayRandomCard();
-            }
-
+            public void mouseClicked(MouseEvent e) { Window.displayRandomCard(); }
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("Mouse Pressed");
-            }
 
+            }
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println("Mouse Released");
-            }
 
+            }
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("Mouse Entered");
-            }
 
+            }
             @Override
             public void mouseExited(MouseEvent e) {
-                System.out.println("Mouse Exited");
+
             }
         });
+
+        card.updateUI();
     }
 
     /**
