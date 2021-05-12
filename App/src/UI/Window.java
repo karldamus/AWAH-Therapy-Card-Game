@@ -10,6 +10,7 @@ public class Window implements Constants {
     private static JFrame window;
     private static JPanel cardsPanel;
     private static Card displayCard;
+    private static Card[] backsOfCards = new Card[Constants.NUMBER_OF_CARDS];
 
     public static JFrame getWindow() { return window; }
 
@@ -43,11 +44,12 @@ public class Window implements Constants {
      * @see Card
      */
     public static void displayRandomCard() {
-        if (displayCard == null) {
-            displayCard = null;
-            updateWindow();
-        }
+        if (displayCard != null) remove(displayCard);
+
         displayCard = new Card(Card.generateRandomCard(), true);
+        add(displayCard);
+
+        updateWindow();
     }
 
     /**
@@ -57,6 +59,11 @@ public class Window implements Constants {
         cardsPanel = new JPanel();
         cardsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         window.add(cardsPanel, new GridBagConstraints());
+
+        for (int i = 0; i < backsOfCards.length; i++) {
+            System.out.println("new card");
+            backsOfCards[i] = new Card("purple_back", false);
+        }
 
         for (int i = 0; i < Constants.NUMBER_OF_CARDS; i += 1) {
             add(new Card("purple_back", false));
@@ -83,14 +90,26 @@ public class Window implements Constants {
      * Add a Card object to the {@link #cardsPanel}.
      * @param card the {@link Card} to add
      */
-    public void add(Card card) {
+    public static void add(Card card) {
         cardsPanel.add(card.getCard());
+    }
+
+    /**
+     * Remove a Card object from the {@link #cardsPanel}.
+     * @param card the {@link Card} to remove
+     */
+    public static void remove(Card card) { cardsPanel.remove(card.getCard()); }
+
+    public static void removeCard() {
+        remove(displayCard);
     }
 
     /**
      * Update the {@link #window} to display all added components thus far.
      */
     private static void updateWindow() {
+        cardsPanel.revalidate();
+        cardsPanel.repaint();
         SwingUtilities.updateComponentTreeUI(window);
     }
 }
